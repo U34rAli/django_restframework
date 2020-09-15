@@ -1,25 +1,16 @@
+from django.contrib.auth.models import User
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
-from django.contrib.auth.decorators import login_required
-from pytz import unicode
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
-
+from google.auth.transport import requests
+from google.oauth2 import id_token
+from knox.auth import TokenAuthentication
+from knox.models import AuthToken
+from pytz import unicode
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from google.oauth2 import id_token
-from google.auth.transport import requests
-from django.contrib.auth.models import User
-import json
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-from knox.models import AuthToken
-from knox.auth import TokenAuthentication
-
 
 CLIENT_ID = '839455990561-ipb3cdo4982dnmbds6gk6pj7c2r81bsk.apps.googleusercontent.com'
 
@@ -50,6 +41,9 @@ def register_user(request):
 def register_user(request):
     context = {}
     return render(request, 'app_auth/index.html', context)
+
+
+
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
